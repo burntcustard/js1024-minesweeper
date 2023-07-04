@@ -7,10 +7,10 @@ const options = {
   toplevel: true,
   compress: {
     passes: 2,
-    // unsafe: true,
-    // unsafe_arrows: true,
-    // unsafe_comps: true,
-    // unsafe_math: true,
+    unsafe: true,
+    unsafe_arrows: true,
+    unsafe_comps: true,
+    unsafe_math: true,
     booleans_as_integers: true,
   },
   mangle: {
@@ -39,8 +39,12 @@ js = js
     .replace(/\)\s/g, ')') // Remove spaces after closing brackets
     .replace(/;`/, '`') // Remove final semicolons
   )
-  // Replace slices global vars with single letter non-declared versions
-  // .replaceAll(/(const\s)?slices/g, 's')
+  // createElement('div') -> createElement`div`
+  .replace(/createElement\('([^']+)'\)/g, 'createElement`$1`')
+  // // Replace slices global vars with single letter non-declared versions
+  // .replaceAll(/(const\s)?board/g, 'm')
+  // Replace const with no declartion
+  .replaceAll('const ', 'let ')
   // Replace all strict equality comparison with abstract equality comparison
   .replaceAll('===', '==')
 
@@ -53,7 +57,7 @@ const code = minifiedJs.code
   .replace(/;$/, '');
 
 const packed = cmdRegPack(code, {
-  crushLengthFactor : parseFloat(0),
+  crushLengthFactor : parseFloat(1),
 });
 
 const html = readFileSync('src/index.html', 'utf8');
