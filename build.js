@@ -47,6 +47,7 @@ js = js
   .replaceAll('const ', 'let ')
   // Replace all strict equality comparison with abstract equality comparison
   .replaceAll('===', '==')
+  .replaceAll('!==', '!=')
 
 const minifiedJs = await minifyJs(js, options);
 

@@ -7,16 +7,16 @@ const board = [];
 const w = 9;
 const h = 9;
 const numBombs = 10;
+const flagCountElement = document.createElement('div');
 const restartButton = document.createElement('button');
 const boardElement = document.createElement('div');
-const flagCountElement = document.createElement('div');
 
-boardElement.style.cssText = `width:320px;height:320px;display:grid;grid-template-columns:repeat(${w},1fr)`
-restartButton.style.cssText = 'font-size:2em;width:2em;height:2em';
+b.style.cssText = 'max-width:320px;display:flex;flex-wrap:wrap';
+boardElement.style.cssText = `width:100%;aspect-ratio:1;display:grid;grid-template:1fr/repeat(${w},1fr)`
+restartButton.style.cssText = 'font-size:2em;width:2em;aspect-ratio:1;margin-left:auto';
 restartButton.onclick = start;
-b.append(flagCountElement);
-b.append(restartButton);
-b.append(boardElement);
+
+b.append(flagCountElement, restartButton, boardElement);
 start();
 
 function start() {
@@ -27,6 +27,11 @@ function start() {
   for (let x = 0; x < w; x++) {
     board[x] = [];
     for (let y = 0; y < h; y++) {
+      const button = document.createElement('button');
+      button.style.cssText = 'aspect-ratio:1';
+      button.onclick = () => revealCell(x, y, 1);
+      button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
+      boardElement.append(button);
       board[x][y] = 0;
     }
   }
@@ -57,12 +62,6 @@ function start() {
       board[x][y] < 9 && board[x - 1]?.[y + 1] > 8 && board[x][y]++
       board[x][y] < 9 && board[x    ]?.[y + 1] > 8 && board[x][y]++
       board[x][y] < 9 && board[x + 1]?.[y + 1] > 8 && board[x][y]++
-
-      const button = document.createElement('button');
-      button.style.cssText = 'aspect-ratio:1';
-      button.onclick = () => revealCell(x, y, 1);
-      button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
-      boardElement.append(button);
     }
   }
 }
@@ -72,7 +71,7 @@ const lose = () => {
     for (let y = 0; y < h; y++) {
       const button = boardElement.children[x * w + y];
 
-      if(board[x][y] > 8) {
+      if (board[x][y] > 8) {
         button.innerText = '💣';
       }
 
@@ -108,10 +107,7 @@ const flagCell = (button) => {
   if (button.innerText) {
     button.innerText = '';
     flagCountElement.innerText = +flagCountElement.innerText + 1;
-    return;
-  }
-
-  if (+flagCountElement.innerText) {
+  } else if (+flagCountElement.innerText) {
     button.innerText = '🚩';
     flagCountElement.innerText = +flagCountElement.innerText - 1;
     checkIfWon();
@@ -137,6 +133,10 @@ const revealCell = (x, y, initial) => {
     if (initial) {
       // clicked on a bomb you lose
       lose();
+
+      // Overrides the bomb with the explosion on the button you clicked
+      button.style.cssText = 'font-size:1pc';
+      button.innerText = '💥';
     }
     return;
   }
