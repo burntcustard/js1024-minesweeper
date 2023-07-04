@@ -10,15 +10,14 @@ const numBombs = 10;
 const restartButton = document.createElement('button');
 const boardElement = document.createElement('div');
 const flagCountElement = document.createElement('div');
+
 boardElement.style.cssText = `width:320px;height:320px;display:grid;grid-template-columns:repeat(${w},1fr)`
 restartButton.style.cssText = 'font-size:2em;width:2em;height:2em';
 restartButton.onclick = start;
 b.append(flagCountElement);
 b.append(restartButton);
-
-start();
-
 b.append(boardElement);
+start();
 
 function start() {
   flagCountElement.innerText = numBombs;
@@ -53,7 +52,7 @@ function start() {
       board[x][y] < 9 && board[x    ]?.[y - 1] > 8 && board[x][y]++
       board[x][y] < 9 && board[x + 1]?.[y - 1] > 8 && board[x][y]++
       board[x][y] < 9 && board[x - 1]?.[y    ] > 8 && board[x][y]++
-    // board[x][y] < 9 && board[x    ]?.[y    ] > 8 && board[x][y]++
+   // board[x][y] < 9 && board[x    ]?.[y    ] > 8 && board[x][y]++
       board[x][y] < 9 && board[x + 1]?.[y    ] > 8 && board[x][y]++
       board[x][y] < 9 && board[x - 1]?.[y + 1] > 8 && board[x][y]++
       board[x][y] < 9 && board[x    ]?.[y + 1] > 8 && board[x][y]++
@@ -61,7 +60,7 @@ function start() {
 
       const button = document.createElement('button');
       button.style.cssText = 'aspect-ratio:1';
-      button.onclick = () => clickCell(x, y, 1);
+      button.onclick = () => revealCell(x, y, 1);
       button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
       boardElement.append(button);
     }
@@ -91,7 +90,7 @@ const checkIfWon = () => {
 
       // If it's a bomb without a flag, or a not-bomb that's not disabled
       if ((board[x][y] > 8 && button.innerText !== '🚩') || (board[x][y] < 9 && !button.disabled)) {
-        return false;
+        return;
       }
     }
   }
@@ -119,7 +118,7 @@ const flagCell = (button) => {
   }
 }
 
-const clickCell = (x, y, initial) => {
+const revealCell = (x, y, initial) => {
   const button = boardElement.children[x * w + y];
   if (x < 0 || x >= w || y < 0 || y >= h || button.disabled) return;
 
@@ -147,16 +146,14 @@ const clickCell = (x, y, initial) => {
   // If there's no number at all in this cell then clear (by "clicking") adjacent cells
   if (!board[x][y]) {
     // there's nothing in this cell, clear it and any other empty cells around it
-    clickCell(x - 1, y - 1);
-    clickCell(x    , y - 1);
-    clickCell(x + 1, y - 1);
-    clickCell(x - 1, y    );
- // clickCell(x    , y    );
-    clickCell(x + 1, y    );
-    clickCell(x - 1, y + 1);
-    clickCell(x    , y + 1);
-    clickCell(x + 1, y + 1);
+    revealCell(x - 1, y - 1);
+    revealCell(x    , y - 1);
+    revealCell(x + 1, y - 1);
+    revealCell(x - 1, y    );
+ // revealCell(x    , y    );
+    revealCell(x + 1, y    );
+    revealCell(x - 1, y + 1);
+    revealCell(x    , y + 1);
+    revealCell(x + 1, y + 1);
   }
 }
-
-// console.table(board);
