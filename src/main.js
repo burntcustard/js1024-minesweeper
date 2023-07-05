@@ -66,6 +66,10 @@ const start = () => {
     i + w < w * h && m.children[i % w + (~~(i / w) + 1) * w].v > 8 && m.children[i].v++                     //  0,+1
     (i + 1) % w && i + w < w * h && m.children[i % w + 1 + (~~(i / w) + 1) * w].v > 8 && m.children[i].v++; // +1,+1
   }
+
+  for (let i = 0; i < w * h; i++) {
+    m.children[i].style.cssText = `font-weight:600;color:hwb(${230 * m.children[i].v} 0% 40%)`;
+  }
 }
 
 const checkIfWon = () => {
@@ -113,7 +117,6 @@ const revealCell = (x, y, initial) => {
   }
 
   button.innerText = button.v || '';
-  button.style.cssText = `font-weight:600;color:hwb(${230 * button.v} 0% 40%)`;
   button.disabled = true;
 
   checkIfWon();
@@ -137,7 +140,6 @@ const revealCell = (x, y, initial) => {
     // Reveal all the bombs and disable all the buttons
     for (let i = 0; i < w * h; i++) {
       if (m.children[i].v > 8) {
-        m.children[i].style.cssText = `font-weight:600;color:hwb(${230 * button.v} 0% 40%)`;
         m.children[i].innerText = '💣';
       }
 
@@ -147,16 +149,15 @@ const revealCell = (x, y, initial) => {
     restartButton.innerText = '😵';
 
     // Overrides the bomb with the explosion on the button you clicked
-    button.style.cssText = `font-weight:600;color:hwb(${230 * button.v} 0% 40%)`;
     button.innerText = '💥';
   }
 }
 
-b.style.cssText = 'max-width:4in;margin:1em;display:grid;gap:1em';
-m.style.cssText = `display:grid;aspect-ratio:${w/h};grid-template:repeat(${h},1fr)/repeat(${w},1fr)`;
-restartButton.style.cssText = 'font-size:2em;width:2em;aspect-ratio:1;margin-left:auto';
+b.style.cssText = 'margin:0';
+m.style.cssText = `margin:1em;max-width:4in;display:grid;aspect-ratio:${w/h};grid-template:repeat(${h},1fr)/repeat(${w},1fr)`;
+restartButton.style.cssText = 'font-size:3em;aspect-ratio:1;margin-left:auto';
 restartButton.onclick = start;
-controls.style.cssText = 'display:flex';
+controls.style.cssText = 'margin:1em;max-width:4in;display:flex';
 controls.append(flagCountElement, restartButton);
 b.append(controls, m);
 start();
