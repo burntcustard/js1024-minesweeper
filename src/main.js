@@ -62,9 +62,11 @@ const start = () => {
 
 const checkIfWon = () => {
   for (let i = 0; i < w * h; i++) {
-    // If it's a bomb without a flag, or a not-bomb that's not disabled
-    if ((m.children[i].v > 8 && m.children[i].innerHTML !== '🚩') || (m.children[i].v < 9 && !m.children[i].disabled)) {
-      return;
+    if (
+      (m.children[i].v > 8 && m.children[i].innerHTML !== '🚩') || // Bomb without a flag
+      (m.children[i].v < 9 && !m.children[i].disabled) // Not-a-bomb that's not yet been clicked
+    ) {
+      return; // Haven't won
     }
   }
 
