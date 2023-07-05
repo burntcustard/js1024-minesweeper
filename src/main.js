@@ -164,9 +164,11 @@ controls.style.cssText = `
   max-width: 4in;
   display: flex;
 `;
+// font: size font-family shorthand used with invalid font-family to save bytes.
+// 'd' is chosen as the invalid font because it appears frequently before `;` in CSS
 restartButton.style.cssText = `
   margin-left: auto;
-  font-size: 3em;
+  font: 3em d;
   aspect-ratio: 1;
 `;
 m.style.cssText = `
