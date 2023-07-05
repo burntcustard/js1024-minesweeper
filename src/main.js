@@ -56,15 +56,15 @@ const start = () => {
   // }
 
   for (let i = 0; i < w * h; i++) {                                                                         //  x, y
-    i % w && i >= w && m.children[i % w - 1 + (~~(i / w) - 1) * w].v > 8 && m.children[i].v++;              // -1,-1
+    i % w && i >= w && m.children[i % w + (~~(i / w) - 1) * w - 1].v > 8 && m.children[i].v++;              // -1,-1
     i >= w && m.children[i % w + (~~(i / w) - 1) * w].v > 8 && m.children[i].v++;                           //  0,-1
-    (i + 1) % w && i >= w && m.children[i % w + 1 + (~~(i / w) - 1) * w].v > 8 && m.children[i].v++;        // +1,-1
-    i % w && m.children[i % w - 1 + ~~(i / w) * w].v > 8 && m.children[i].v++;                              // -1, 0
+    (i + 1) % w && i >= w && m.children[i % w + (~~(i / w) - 1) * w + 1].v > 8 && m.children[i].v++;        // +1,-1
+    i % w && m.children[i % w + ~~(i / w) * w - 1].v > 8 && m.children[i].v++;                              // -1, 0
                                                                                                             //  0, 0
-    (i + 1) % w && m.children[i % w + 1 + ~~(i / w) * w].v > 8 && m.children[i].v++;                        // +1, 0
-    i % w && i + w < w * h && m.children[i % w - 1 + (~~(i / w) + 1) * w].v > 8 && m.children[i].v++;       // -1,+1
+    (i + 1) % w && m.children[i % w + ~~(i / w) * w + 1].v > 8 && m.children[i].v++;                        // +1, 0
+    i % w && i + w < w * h && m.children[i % w + (~~(i / w) + 1) * w - 1].v > 8 && m.children[i].v++;       // -1,+1
     i + w < w * h && m.children[i % w + (~~(i / w) + 1) * w].v > 8 && m.children[i].v++                     //  0,+1
-    (i + 1) % w && i + w < w * h && m.children[i % w + 1 + (~~(i / w) + 1) * w].v > 8 && m.children[i].v++; // +1,+1
+    (i + 1) % w && i + w < w * h && m.children[i % w + (~~(i / w) + 1) * w + 1].v > 8 && m.children[i].v++; // +1,+1
   }
 
   for (let i = 0; i < w * h; i++) {
