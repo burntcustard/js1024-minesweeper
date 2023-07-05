@@ -42,9 +42,9 @@ const start = () => {
   }
 
   for (let i = 0; i < w * h; i++) {                                                                         //  x, y
-     i      % w && w < i         && m.children[i % w + w * (~~(i / w) - 1) - 1].v > 8 && m.children[i].v++; // -1,-1
-                   w < i         && m.children[i % w + w * (~~(i / w) - 1)    ].v > 8 && m.children[i].v++; //  0,-1
-    (i + 1) % w && w < i         && m.children[i % w + w * (~~(i / w) - 1) + 1].v > 8 && m.children[i].v++; // +1,-1
+     i      % w && i >= w        && m.children[i % w + w * (~~(i / w) - 1) - 1].v > 8 && m.children[i].v++; // -1,-1
+                   i >= w        && m.children[i % w + w * (~~(i / w) - 1)    ].v > 8 && m.children[i].v++; //  0,-1
+    (i + 1) % w && i >= w        && m.children[i % w + w * (~~(i / w) - 1) + 1].v > 8 && m.children[i].v++; // +1,-1
      i      % w                  && m.children[i % w + w *  ~~(i / w)      - 1].v > 8 && m.children[i].v++; // -1, 0
     //                                                                                                      //  0, 0
     (i + 1) % w                  && m.children[i % w + w *  ~~(i / w)      + 1].v > 8 && m.children[i].v++; // +1, 0
