@@ -20,7 +20,7 @@ const start = () => {
   for (let i = 0; i < w * h; i++) {
     const button = document.createElement('button');
     button.onclick = (e) => revealCell(i % w, ~~(i / w), 1); // Saves 1B by including the e variable
-    button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
+    button.oncontextmenu = (e) => e.preventDefault() && flagCell(button);
     // "value" that we give each button. Is the number of adjacent bombs (or 9+ if there's a bomb)
     button.v = 0;
     m.append(button);
@@ -57,15 +57,15 @@ const start = () => {
   // }
 
   for (let i = 0; i < w * h; i++) {                                                                         //  x, y
-    i % w && i >= w && m.children[i % w + (~~(i / w) - 1) * w - 1].v > 8 && m.children[i].v++;              // -1,-1
-    i >= w && m.children[i % w + (~~(i / w) - 1) * w].v > 8 && m.children[i].v++;                           //  0,-1
-    (i + 1) % w && i >= w && m.children[i % w + (~~(i / w) - 1) * w + 1].v > 8 && m.children[i].v++;        // +1,-1
-    i % w && m.children[i % w + ~~(i / w) * w - 1].v > 8 && m.children[i].v++;                              // -1, 0
-                                                                                                            //  0, 0
-    (i + 1) % w && m.children[i % w + ~~(i / w) * w + 1].v > 8 && m.children[i].v++;                        // +1, 0
-    i % w && i + w < w * h && m.children[i % w + (~~(i / w) + 1) * w - 1].v > 8 && m.children[i].v++;       // -1,+1
-    i + w < w * h && m.children[i % w + (~~(i / w) + 1) * w].v > 8 && m.children[i].v++                     //  0,+1
-    (i + 1) % w && i + w < w * h && m.children[i % w + (~~(i / w) + 1) * w + 1].v > 8 && m.children[i].v++; // +1,+1
+     i      % w && w < i         && m.children[i % w + w * (~~(i / w) - 1) - 1].v > 8 && m.children[i].v++; // -1,-1
+                   w < i         && m.children[i % w + w * (~~(i / w) - 1)    ].v > 8 && m.children[i].v++; //  0,-1
+    (i + 1) % w && w < i         && m.children[i % w + w * (~~(i / w) - 1) + 1].v > 8 && m.children[i].v++; // +1,-1
+     i      % w                  && m.children[i % w + w *  ~~(i / w)      - 1].v > 8 && m.children[i].v++; // -1, 0
+    //                                                                                                      //  0, 0
+    (i + 1) % w                  && m.children[i % w + w *  ~~(i / w)      + 1].v > 8 && m.children[i].v++; // +1, 0
+     i      % w && i + w < w * h && m.children[i % w + w * (~~(i / w) + 1) - 1].v > 8 && m.children[i].v++; // -1,+1
+                   i + w < w * h && m.children[i % w + w * (~~(i / w) + 1)    ].v > 8 && m.children[i].v++; //  0,+1
+    (i + 1) % w && i + w < w * h && m.children[i % w + w * (~~(i / w) + 1) + 1].v > 8 && m.children[i].v++; // +1,+1
   }
 
   for (let i = 0; i < w * h; i++) {
