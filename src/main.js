@@ -6,6 +6,7 @@
 const w = 9;
 const h = 9;
 const numBombs = 10;
+const controls = document.createElement('div');
 const flagCountElement = document.createElement('div');
 const restartButton = document.createElement('button');
 const m = document.createElement('div'); // "map" or "game map element"
@@ -17,7 +18,7 @@ const start = () => {
 
   for (let i = 0; i < w * h; i++) {
     const button = document.createElement('button');
-    button.onclick = () => revealCell(i % w, ~~(i / w), 1);
+    button.onclick = (e) => revealCell(i % w, ~~(i / w), 1); // Saves 1B by including the event variable
     button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
     // "value" that we give each button, which is the number of adjacent bombs (or 9+ if there's a bomb)
     button.v = 0;
@@ -34,7 +35,8 @@ const start = () => {
     }
   }
 
-  for (let b = 0; b < numBombs; b++) {
+  // Reverse/minified loop saves a few bytes, but isn't suitable for other loops as it confusingly reverses x/y
+  for (let b = numBombs; b--;) {
     addBomb();
   }
 
@@ -66,18 +68,6 @@ const start = () => {
   }
 }
 
-const lose = () => {
-  for (let i = 0; i < w * h; i++) {
-    if (m.children[i].v > 8) {
-      m.children[i].innerText = '💣';
-    }
-
-    m.children[i].disabled = true;
-  }
-
-  restartButton.innerText = '😵';
-}
-
 const checkIfWon = () => {
   for (let i = 0; i < w * h; i++) {
     // If it's a bomb without a flag, or a not-bomb that's not disabled
@@ -94,12 +84,19 @@ const checkIfWon = () => {
 }
 
 const flagCell = (button) => {
+  // If there's already a flag on it
   if (button.innerText) {
+    // Remove the flag from the button
     button.innerText = '';
-    flagCountElement.innerText += '🚩'; // Add a 🚩
+    // Add the flag back into the flag-storage
+    flagCountElement.innerText += '🚩';
+  // If there's not a flag on it, and there's still at least some flags in the flag-storage
   } else if (flagCountElement.innerText) {
+    // Add the flag to the button
     button.innerText = '🚩';
-    flagCountElement.innerText = flagCountElement.innerText.replace('🚩', ''); // Remove a 🚩
+    // Remove a single flag from the flag storage
+    flagCountElement.innerText = flagCountElement.innerText.replace('🚩', '');
+    // We might have just won!
     checkIfWon();
   }
 }
@@ -116,20 +113,8 @@ const revealCell = (x, y, initial) => {
   }
 
   button.innerText = button.v || '';
+  button.style.cssText = `font-weight:500;color:hwb(${230 * button.v} 0% 30%)`;
   button.disabled = true;
-
-  // If it's a bomb
-  if (button.v > 8) {
-    if (initial) {
-      // clicked on a bomb you lose
-      lose();
-
-      // Overrides the bomb with the explosion on the button you clicked
-      button.style.cssText = 'font-size:1pc';
-      button.innerText = '💥';
-    }
-    return;
-  }
 
   checkIfWon();
 
@@ -146,11 +131,30 @@ const revealCell = (x, y, initial) => {
     revealCell(x    , y + 1);
     revealCell(x + 1, y + 1);
   }
+
+  // If it's a bomb
+  if (button.v > 8 && initial) {
+    // Reveal all the bombs and disable all the buttons
+    for (let i = 0; i < w * h; i++) {
+      if (m.children[i].v > 8) {
+        m.children[i].innerText = '💣';
+      }
+
+      m.children[i].disabled = true;
+    }
+
+    restartButton.innerText = '😵';
+
+    // Overrides the bomb with the explosion on the button you clicked
+    button.style.cssText = 'font-size:1pc';
+    button.innerText = '💥';
+  }
 }
 
-b.style.cssText = 'max-width:450px;display:flex;flex-wrap:wrap';
-m.style.cssText = `width:100%;aspect-ratio:${w/h};display:grid;grid-template:repeat(${h},1fr)/repeat(${w},1fr)`
+m.style.cssText = `max-width:4in;display:grid;aspect-ratio:${w/h};grid-template:repeat(${h},1fr)/repeat(${w},1fr)`;
 restartButton.style.cssText = 'font-size:2em;width:2em;aspect-ratio:1;margin-left:auto';
-b.append(flagCountElement, restartButton, m);
 restartButton.onclick = start;
+controls.style.cssText = 'max-width:4in;display:flex';
+controls.append(flagCountElement, restartButton);
+b.append(controls, m);
 start();

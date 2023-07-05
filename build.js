@@ -43,15 +43,16 @@ js = js
   .replace(/createElement\('([^']+)'\)/g, 'createElement`$1`')
   // // Replace slices global vars with single letter non-declared versions
   // .replaceAll(/(const\s)?board/g, 'm')
-  // Replace const with no declartion
+  // Replace const with let declartion
   .replaceAll('const ', 'let ')
   // Replace all strict equality comparison with abstract equality comparison
   .replaceAll('===', '==')
   .replaceAll('!==', '!=')
 
-const minifiedJs = await minifyJs(js, options);
+  const minifiedJs = await minifyJs(js, options);
 
-const code = minifiedJs.code
+  const code = minifiedJs.code
+  .replace('let t=', 't=')
   // Replace all double quotes with backticks for consistency
   .replaceAll('"', '`')
   // Remove final semicolon
