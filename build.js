@@ -93,7 +93,7 @@ const mangled = minifiedInlined
   .replace('<body>', '') // Remove body opening tag
   .replace('</body></html>', ''); // Remove closing tags
 
-console.log(`Mangled: ${mangled.length}B`);
+console.log(`Mangled: ${new Blob([mangled]).size}B`);
 
 writeFileSync('index.nonpacked.html', minifiedInlinedNonPacked);
 writeFileSync('index.watch.html', minifiedInlined);
