@@ -113,7 +113,7 @@ const revealCell = (x, y, initial) => {
   }
 
   button.innerText = button.v || '';
-  button.style.cssText = `font-weight:500;color:hwb(${230 * button.v} 0% 30%)`;
+  button.style.cssText = `font-weight:500;color:hwb(${230 * button.v} 0% 40%)`;
   button.disabled = true;
 
   checkIfWon();
@@ -137,6 +137,7 @@ const revealCell = (x, y, initial) => {
     // Reveal all the bombs and disable all the buttons
     for (let i = 0; i < w * h; i++) {
       if (m.children[i].v > 8) {
+        m.children[i].style.cssText = `font-weight:500;color:hwb(${230 * button.v} 0% 40%)`;
         m.children[i].innerText = '💣';
       }
 
@@ -146,15 +147,16 @@ const revealCell = (x, y, initial) => {
     restartButton.innerText = '😵';
 
     // Overrides the bomb with the explosion on the button you clicked
-    button.style.cssText = 'font-size:1pc';
+    button.style.cssText = `font-weight:500;color:hwb(${230 * button.v} 0% 40%);font-size:1pc`;
     button.innerText = '💥';
   }
 }
 
-m.style.cssText = `max-width:4in;display:grid;aspect-ratio:${w/h};grid-template:repeat(${h},1fr)/repeat(${w},1fr)`;
+b.style.cssText = 'max-width:4in;margin:1em;display:grid;gap:1em';
+m.style.cssText = `display:grid;aspect-ratio:${w/h};grid-template:repeat(${h},1fr)/repeat(${w},1fr)`;
 restartButton.style.cssText = 'font-size:2em;width:2em;aspect-ratio:1;margin-left:auto';
 restartButton.onclick = start;
-controls.style.cssText = 'max-width:4in;display:flex';
+controls.style.cssText = 'display:flex';
 controls.append(flagCountElement, restartButton);
 b.append(controls, m);
 start();
