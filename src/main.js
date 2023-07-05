@@ -54,7 +54,9 @@ const start = () => {
   }
 
   for (let i = 0; i < w * h; i++) {
-    m.children[i].style.color = `lch(40 99 ${250 * m.children[i].v});`;
+    m.children[i].style.cssText = `
+      color: lch(40 99 ${250 * m.children[i].v});
+    `;
   }
 }
 
