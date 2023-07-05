@@ -55,7 +55,7 @@ const start = () => {
 
   for (let i = 0; i < w * h; i++) {
     m.children[i].style.cssText = `
-      color: lch(40 99 ${250 * m.children[i].v});
+      color: lch(40 99 ${m.children[i].v ** 1.1 * 225});
     `;
   }
 }
@@ -170,3 +170,16 @@ restartButton.onclick = start;
 controls.append(flagCountElement, restartButton);
 b.append(controls, m);
 start();
+
+// Color testing
+// for (let i = 1; i < 8; i++) {
+//   const button = document.createElement('button');
+//   // "value" that we give each button. Is the number of adjacent bombs (or 9+ if there's a bomb)
+//   button.v = i;
+//   m.append(button);
+//   button.innerHTML = button.v ? '<b>' + button.v : '';
+//   button.style.cssText = `
+//     aspect-ratio:1;
+//     color: lch(40 99 ${button.v ** 1.1 * 225});
+//   `;
+// }
