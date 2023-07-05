@@ -33,7 +33,7 @@ js = js
     .replace(/\n\s+/g, '') // Remove newlines & spaces within values
     .replace(/:\s/g, ':')  // Remove spaces in between property & values
     .replace(/\,\s/g, ',') // Remove space after commas
-    .replace(/(%) ([\d$])/g, '$1$2') // Remove space between '100% 50%' in clip-path
+    .replace(/(%) ([\d$])/g, '$1$2') // Remove space between '100% 50%' in hwb()
     .replace(/\s\/\s/g, '/') // Remove spaces around `/` in hsl
     .replace(/;\s+/g, ';') // Remove newlines & spaces after semicolons
     .replace(/\)\s/g, ')') // Remove spaces after closing brackets

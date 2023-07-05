@@ -68,7 +68,10 @@ const start = () => {
   }
 
   for (let i = 0; i < w * h; i++) {
-    m.children[i].style.cssText = `font-weight:600;color:hwb(${230 * m.children[i].v} 0% 40%)`;
+    m.children[i].style.cssText = `
+      font-weight: 600;
+      color: hwb(${230 * m.children[i].v} 0% 40%);
+    `;
   }
 }
 
@@ -153,11 +156,27 @@ const revealCell = (x, y, initial) => {
   }
 }
 
-b.style.cssText = 'margin:0';
-m.style.cssText = `margin:1em;max-width:4in;display:grid;aspect-ratio:${w/h};grid-template:repeat(${h},1fr)/repeat(${w},1fr)`;
-restartButton.style.cssText = 'font-size:3em;aspect-ratio:1;margin-left:auto';
+b.style.cssText = `
+  margin: 0;
+`;
+controls.style.cssText = `
+  margin: 1em;
+  max-width: 4in;
+  display: flex;
+`;
+restartButton.style.cssText = `
+  margin-left: auto;
+  font-size: 3em;
+  aspect-ratio: 1;
+`;
+m.style.cssText = `
+  margin: 1em;
+  max-width: 4in;
+  display: grid;
+  aspect-ratio: ${w/h};
+  grid: repeat(${h},1fr)/repeat(${w},1fr);
+`;
 restartButton.onclick = start;
-controls.style.cssText = 'margin:1em;max-width:4in;display:flex';
 controls.append(flagCountElement, restartButton);
 b.append(controls, m);
 start();
