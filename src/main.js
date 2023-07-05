@@ -18,15 +18,15 @@ const start = () => {
 
   for (let i = 0; i < w * h; i++) {
     const button = document.createElement('button');
-    button.onclick = (e) => revealCell(i % w, ~~(i / w), 1); // Saves 1B by including the event variable
+    button.onclick = (e) => revealCell(i % w, ~~(i / w), 1); // Saves 1B by including the e variable
     button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
-    // "value" that we give each button, which is the number of adjacent bombs (or 9+ if there's a bomb)
+    // "value" that we give each button. Is the number of adjacent bombs (or 9+ if there's a bomb)
     button.v = 0;
     m.append(button);
   }
 
   const addBomb = () => {
-    const randomIndex = ~~(Math.random() * w * h); // ~~ as Math.floor() for +numbers
+    const randomIndex = ~~(Math.random() * w * h); // ~~ as Math.floor() for positive numbers
 
     if (m.children[randomIndex].v) {
       addBomb();
@@ -35,7 +35,7 @@ const start = () => {
     }
   }
 
-  // Reverse/minified loop saves a few bytes, but isn't suitable for other loops as it confusingly reverses x/y
+  // Reverse loop saves a few b, but isn't suitable for other loops as it confusingly reverses x/y
   for (let b = numBombs; b--;) {
     addBomb();
   }
