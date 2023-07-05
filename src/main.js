@@ -54,9 +54,7 @@ const start = () => {
   }
 
   for (let i = 0; i < w * h; i++) {
-    m.children[i].style.color = `
-      hwb(${230 * m.children[i].v} 0% 40%);
-    `;
+    m.children[i].style.color = `hwb(${230 * m.children[i].v} 0% 40%);`;
   }
 }
 
@@ -152,10 +150,11 @@ controls.style.cssText = `
 // font: size font-family shorthand used with invalid font-family to save bytes.
 // 'd' is chosen as the invalid font because it appears frequently before `;` in CSS.
 // width is // 384/9*1.5=64 so it takes up 1 and a half square with default size.
+// width being in rem saves 2B 'cause 4rem = 64px, & it's similar to 'max-width:4in'.
 restartButton.style.cssText = `
   margin-left: auto;
   font: 1cm d;
-  width: 64px;
+  width: 4rem;
   aspect-ratio: 1;
 `;
 m.style.cssText = `
