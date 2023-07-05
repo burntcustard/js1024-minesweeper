@@ -55,7 +55,7 @@ const start = () => {
 
   for (let i = 0; i < w * h; i++) {
     m.children[i].style.cssText = `
-      color: lch(40 99 ${m.children[i].v ** 1.1 * 225});
+      color: lch(45 99 ${m.children[i].v ** 1.1 * 225});
     `;
   }
 }
@@ -180,6 +180,6 @@ start();
 //   button.innerHTML = button.v ? '<b>' + button.v : '';
 //   button.style.cssText = `
 //     aspect-ratio:1;
-//     color: lch(40 99 ${button.v ** 1.1 * 225});
+//         color: lch(45 99 ${button.v ** 1.1 * 225});
 //   `;
 // }
