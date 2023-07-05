@@ -27,7 +27,7 @@ let js = readFileSync('src/main.js', 'utf8');
 
 // Some custom mangling of JS to assist / work around Terser
 js = js
-  // Remove whitespace in CSS template literals
+  // Minify CSS template literals
   .replace(/`[^`]+`/g, tag => tag
     .replace(/`\s+/, '`')  // Remove newlines & spaces at start or string
     .replace(/\n\s+/g, '') // Remove newlines & spaces within values

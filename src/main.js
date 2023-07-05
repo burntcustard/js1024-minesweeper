@@ -13,14 +13,14 @@ const restartButton = document.createElement('button');
 const m = document.createElement('div'); // "map" or "game map element"
 
 const start = () => {
-  flagCountElement.innerText = '🚩'.repeat(numBombs);
-  restartButton.innerText = '🙂';
-  m.innerText = '';
+  flagCountElement.innerHTML = '🚩'.repeat(numBombs);
+  restartButton.innerHTML = '🙂';
+  m.innerHTML = '';
 
   for (let i = 0; i < w * h; i++) {
     const button = document.createElement('button');
     button.onclick = (e) => revealCell(i % w, ~~(i / w), 1); // Saves 1B by including the e variable
-    button.oncontextmenu = (e) => e.preventDefault() && flagCell(button);
+    button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
     // "value" that we give each button. Is the number of adjacent bombs (or 9+ if there's a bomb)
     button.v = 0;
     m.append(button);
@@ -41,21 +41,6 @@ const start = () => {
     addBomb();
   }
 
-  // Test separate (simpler?) x and y for figuring out adjacent cell values
-  // for (let x = 0; x < w; x++) {
-  //   for (let y = 0; y < h; y++) {
-  //     x && y && m.children[x - 1 + (y - 1) * w].v > 8 && m.children[x + y * w].v++;                 // -1,-1
-  //     y && m.children[x + (y - 1) * w].v > 8 && m.children[x + y * w].v++;                          //  0,-1
-  //     x < w - 1 && y && m.children[x + 1 + (y - 1) * w].v > 8 && m.children[x + y * w].v++;             // +1,-1
-  //     x && m.children[x - 1 + y * w].v > 8 && m.children[x + y * w].v++;                            // -1, 0
-  //     //                                                                                        //  0, 0
-  //     x < w - 1 && m.children[x + 1 + y * w].v > 8 && m.children[x + y * w].v++;                    // +1, 0
-  //     x && y < h - 1 && m.children[x - 1 + (y + 1) * w].v > 8 && m.children[x + y * w].v++;         // -1,+1
-  //     y < h - 1 && m.children[x + (y + 1) * w].v > 8 && m.children[x + y * w].v++;                  //  0,+1
-  //     x < w - 1 && y < h - 1 && m.children[x + 1 + (y + 1) * w].v > 8 && m.children[x + y * w].v++; // +1,+1
-  //   }
-  // }
-
   for (let i = 0; i < w * h; i++) {                                                                         //  x, y
      i      % w && w < i         && m.children[i % w + w * (~~(i / w) - 1) - 1].v > 8 && m.children[i].v++; // -1,-1
                    w < i         && m.children[i % w + w * (~~(i / w) - 1)    ].v > 8 && m.children[i].v++; //  0,-1
@@ -69,9 +54,8 @@ const start = () => {
   }
 
   for (let i = 0; i < w * h; i++) {
-    m.children[i].style.cssText = `
-      font-weight: 600;
-      color: hwb(${230 * m.children[i].v} 0% 40%);
+    m.children[i].style.color = `
+      hwb(${230 * m.children[i].v} 0% 40%);
     `;
   }
 }
@@ -79,12 +63,12 @@ const start = () => {
 const checkIfWon = () => {
   for (let i = 0; i < w * h; i++) {
     // If it's a bomb without a flag, or a not-bomb that's not disabled
-    if ((m.children[i].v > 8 && m.children[i].innerText !== '🚩') || (m.children[i].v < 9 && !m.children[i].disabled)) {
+    if ((m.children[i].v > 8 && m.children[i].innerHTML !== '🚩') || (m.children[i].v < 9 && !m.children[i].disabled)) {
       return;
     }
   }
 
-  restartButton.innerText = '🤩';
+  restartButton.innerHTML = '🤩';
 
   for (let i = 0; i < w * h; i++) {
     m.children[i].disabled = true;
@@ -93,17 +77,17 @@ const checkIfWon = () => {
 
 const flagCell = (button) => {
   // If there's already a flag on it
-  if (button.innerText) {
+  if (button.innerHTML) {
     // Remove the flag from the button
-    button.innerText = '';
+    button.innerHTML = '';
     // Add the flag back into the flag-storage
-    flagCountElement.innerText += '🚩';
+    flagCountElement.innerHTML += '🚩';
   // If there's not a flag on it, and there's still at least some flags in the flag-storage
-  } else if (flagCountElement.innerText) {
+  } else if (flagCountElement.innerHTML) {
     // Add the flag to the button
-    button.innerText = '🚩';
+    button.innerHTML = '🚩';
     // Remove a single flag from the flag storage
-    flagCountElement.innerText = flagCountElement.innerText.replace('🚩', '');
+    flagCountElement.innerHTML = flagCountElement.innerHTML.replace('🚩', '');
     // We might have just won!
     checkIfWon();
   }
@@ -113,14 +97,14 @@ const revealCell = (x, y, initial) => {
   const button = m.children[y * w + x];
   if (x < 0 || x >= w || y < 0 || y >= h || button.disabled) return;
 
-  if (button.innerText === '🚩') {
+  if (button.innerHTML === '🚩') {
     // You can't click on flagged cells!
     if (initial) return;
 
-    flagCountElement.innerText += '🚩';
+    flagCountElement.innerHTML += '🚩';
   }
 
-  button.innerText = button.v || '';
+  button.innerHTML = button.v ? '<b>' + button.v : '';
   button.disabled = true;
 
   checkIfWon();
@@ -144,16 +128,16 @@ const revealCell = (x, y, initial) => {
     // Reveal all the bombs and disable all the buttons
     for (let i = 0; i < w * h; i++) {
       if (m.children[i].v > 8) {
-        m.children[i].innerText = '💣';
+        m.children[i].innerHTML = '💣';
       }
 
       m.children[i].disabled = true;
     }
 
-    restartButton.innerText = '😵';
+    restartButton.innerHTML = '😵';
 
     // Overrides the bomb with the explosion on the button you clicked
-    button.innerText = '💥';
+    button.innerHTML = '💥';
   }
 }
 
