@@ -7,7 +7,8 @@ const w = 9;
 const h = 9;
 const numBombs = 10;
 const controls = document.createElement('div');
-const flagCountElement = document.createElement('div');
+// The <big> element is deprecated but supported in all browsers & makes the flags bigger
+const flagCountElement = document.createElement('big');
 const restartButton = document.createElement('button');
 const m = document.createElement('div'); // "map" or "game map element"
 
@@ -165,10 +166,12 @@ controls.style.cssText = `
   display: flex;
 `;
 // font: size font-family shorthand used with invalid font-family to save bytes.
-// 'd' is chosen as the invalid font because it appears frequently before `;` in CSS
+// 'd' is chosen as the invalid font because it appears frequently before `;` in CSS.
+// width is // 384/9*1.5=64 so it takes up 1 and a half square with default size.
 restartButton.style.cssText = `
   margin-left: auto;
-  font: 3em d;
+  font: 1cm d;
+  width: 64px;
   aspect-ratio: 1;
 `;
 m.style.cssText = `
