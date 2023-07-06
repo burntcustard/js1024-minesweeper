@@ -6,11 +6,11 @@
 const w = 9;
 const h = 9;
 const numBombs = 10;
-const controls = document.createElement('div');
+const controls = document.createElement('p');
 // The <big> element is deprecated but supported in all browsers & makes the flags bigger
 const flagCountElement = document.createElement('big');
 const restartButton = document.createElement('button');
-const m = document.createElement('div'); // "map" or "game map element"
+const m = document.createElement('p'); // "map" or "game map element"
 
 const start = () => {
   flagCountElement.innerHTML = '🚩'.repeat(numBombs);
