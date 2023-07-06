@@ -103,10 +103,11 @@ const revealCell = (x, y, initial) => {
     // You can't click on flagged cells!
     if (initial) return;
 
+    // Return the auto-removed flag to the flag-storage
     flagCountElement.innerHTML += '🚩';
   }
 
-  button.innerHTML = button.v ? '<b>' + button.v : '';
+  button.innerHTML = '<b>' + (button.v || '');
   button.disabled = true;
 
   checkIfWon();
