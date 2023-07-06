@@ -157,16 +157,16 @@ controls.style.cssText = `
 // width being in rem saves 2B 'cause 4rem = 64px, & it's similar to 'max-width:4in'.
 restartButton.style.cssText = `
   margin-left: auto;
+  max-width: 4rem;
   font: 1cm d;
-  width: 4rem;
   aspect-ratio: 1;
 `;
 m.style.cssText = `
   margin: 1em;
   max-width: 4in;
   display: grid;
-  aspect-ratio: ${w/h};
   grid: repeat(${h},1fr)/repeat(${w},1fr);
+  aspect-ratio: ${w/h};
 `;
 restartButton.onclick = start;
 controls.append(flagCountElement, restartButton);
