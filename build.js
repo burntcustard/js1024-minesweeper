@@ -59,7 +59,9 @@ js = js
   .replace(/;$/, '');
 
 const packed = cmdRegPack(code, {
-  crushLengthFactor : parseFloat(1),
+  crushGainFactor: parseFloat(2),
+  crushLengthFactor: parseFloat(1),
+  crushCopiesFactor: parseFloat(1),
 });
 
 const html = readFileSync('src/index.html', 'utf8');
