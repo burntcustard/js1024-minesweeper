@@ -63,9 +63,7 @@ const start = () => {
   }
 
   // Look at each cells adjacent cells and increment if there's a bomb nearby
-  for (let i = 0; i < w * h; i++) {                                                                         //  x, y
-    // i >= w not needd because m.children[i...]?.v > 8 already checks if cell exists
-    // i + w < w * h not needed because of the same thing
+  for (let i = 0; i < w * h; i++) {                                                         //  x, y
      i      % w && m.children[i % w + w * (~~(i / w) - 1) - 1]?.v > 8 && m.children[i].v++; // -1,-1
                    m.children[i % w + w * (~~(i / w) - 1)    ]?.v > 8 && m.children[i].v++; //  0,-1
     (i + 1) % w && m.children[i % w + w * (~~(i / w) - 1) + 1]?.v > 8 && m.children[i].v++; // +1,-1
@@ -75,11 +73,6 @@ const start = () => {
      i      % w && m.children[i % w + w * (~~(i / w) + 1) - 1]?.v > 8 && m.children[i].v++; // -1,+1
                    m.children[i % w + w * (~~(i / w) + 1)    ]?.v > 8 && m.children[i].v++; //  0,+1
     (i + 1) % w && m.children[i % w + w * (~~(i / w) + 1) + 1]?.v > 8 && m.children[i].v++; // +1,+1
-    // for (let c = 9; c--;) {
-    //   (!(c % 3 - 1) || ((i + (2 - (c + 2) % 3 )) % w)) &&
-    //   m.children[i % w + w * (~~(i / w) + (~~(c / 3) - 1)) + (c % 3 - 1)]?.v > 8 &&
-    //   m.children[i].v++;
-    // }
   }
 
   // Set text color for each cell. Must be done even for bomb cells, as setting
