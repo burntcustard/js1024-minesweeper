@@ -140,12 +140,13 @@ const revealCell = (x, y, initial) => {
   button.disabled = true;
 
   // Show the cell's value, if it's >0. Uses <b> to make the button text bold
-  button.innerHTML = '<b>' + (button.v || '');
+  button.innerHTML = '<b>' + button.v;
 
   checkIfWon();
 
   // If there's no number in this cell then reveal adjacent cells
   if (!button.v) {
+    button.innerHTML = '';
     revealCell(x - 1, y - 1);
     revealCell(x    , y - 1);
     revealCell(x + 1, y - 1);
