@@ -92,7 +92,6 @@ const mangled = minifiedInlined
   .replace('<head>', '') // Remove head opening tag
   .replace('</head>', '') // Remove head closing tag
   .replace('"initial-scale=1"', 'initial-scale=1') // Remove initial-scale quotes
-  .replace('<body>', '') // Remove body opening tag
   .replace('</body></html>', ''); // Remove closing tags
 
 console.log(`Mangled: ${new Blob([mangled]).size}B`);
