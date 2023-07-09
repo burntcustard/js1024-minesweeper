@@ -38,7 +38,7 @@ const start = () => {
     const button = document.createElement('button');
 
     // Always including 'e' parame saves 1B compared to some with some without
-    button.onclick = (e) => revealCell(i % w, ~~(i / w), 1);
+    button.onclick = (e) => revealCell(i % w, ~~(i / w), true);
     button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
 
     // Cell Value, i.e. the number of adjacent bombs (9+ if the cell is a bomb)
@@ -136,11 +136,11 @@ const revealCell = (x, y, initial) => {
     flagCountElement.innerHTML += '🚩';
   }
 
-  // Show the cell's value, if it's >0. Uses <b> to make the button text bold
-  button.innerHTML = '<b>' + (button.v || '');
-
   // Disable the cell to make it non-interactive & apply default disabled style
   button.disabled = true;
+
+  // Show the cell's value, if it's >0. Uses <b> to make the button text bold
+  button.innerHTML = '<b>' + (button.v || '');
 
   checkIfWon();
 
