@@ -1,11 +1,10 @@
 /**
- * bombs are represented by the number 9
+ * bombs are represented by cells with a number of 9+
  * `+variable` is used instead of `parseInt(variable)` to save a few bytes
  */
 
 const w = 9;
 const h = 9;
-const numBombs = 10;
 const controls = document.createElement('p');
 // The <big> element is deprecated but supported in all browsers & makes the flags bigger
 const flagCountElement = document.createElement('big');
@@ -13,6 +12,9 @@ const restartButton = document.createElement('button');
 const m = document.createElement('p'); // "map" or "game map element"
 
 const start = () => {
+  // numBombs is decremented when adding bombs, so needs to be reset on start()
+  let numBombs = 10;
+
   flagCountElement.innerHTML = '🚩'.repeat(numBombs);
   restartButton.innerHTML = '🙂';
   m.innerHTML = '';
@@ -36,8 +38,9 @@ const start = () => {
     }
   }
 
-  // Reverse loop saves a few b, but isn't suitable for other loops as it confusingly reverses x/y
-  for (let b = numBombs; b--;) {
+  // Reverse loop & reusing numBombs var instead of adding a new one saves a
+  // few bytes but isn't suitable for other loops as it kind of reverses x/y
+  for (; numBombs--;) {
     addBomb();
   }
 
@@ -126,20 +129,22 @@ const revealCell = (x, y, initial) => {
     revealCell(x + 1, y + 1);
   }
 
-  // If it's a bomb
+  // If it's a bomb that was just clicked
   if (button.v > 8 && initial) {
-    // Reveal all the bombs and disable all the buttons
+    // Go through every button
     for (let i = 0; i < w * h; i++) {
+      // Show the bombs
       if (m.children[i].v > 8) {
         m.children[i].innerHTML = '💣';
       }
 
+      // Disable every button
       m.children[i].disabled = true;
     }
 
     restartButton.innerHTML = '😵';
 
-    // Overrides the bomb with the explosion on the button you clicked
+    // Override the bomb with the explosion on the pressed button
     button.innerHTML = '💥';
   }
 }
