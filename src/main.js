@@ -144,9 +144,12 @@ const revealCell = (x, y, initial) => {
 
   checkIfWon();
 
-  // If there's no number in this cell then reveal adjacent cells
   if (!button.v) {
+    // This button has a value of 0, but we don't want to show '0', so clear it
+    // here. Overriding saves bytes compared to setting button text just once.
     button.innerHTML = '';
+
+    // Reveal adjacent cells
     revealCell(x - 1, y - 1);
     revealCell(x    , y - 1);
     revealCell(x + 1, y - 1);
