@@ -213,7 +213,7 @@ m.style.cssText = `
   margin: 1em;
   max-width: 4in;
   display: grid;
-  grid: auto/repeat(${w},1fr);
+  grid: repeat(${h},1fr)/repeat(${w},1fr);
   aspect-ratio: ${w/h};
 `;
 
