@@ -3,13 +3,22 @@
  * `+variable` is used instead of `parseInt(variable)` to save a few bytes
  */
 
+// Width and Height are inlined and minified, >9 takes up a lot more bytes
 const w = 9;
 const h = 9;
+
+// Container element for the flags and the restart button
 const controls = document.createElement('p');
-// The <big> element is deprecated but supported in all browsers & makes the flags bigger
+
+// The <big> is deprecated, but supported in all browsers, and makes the flags
+// slightly bigger without needing to use 'font-size' CSS
 const flagCountElement = document.createElement('big');
+
+// Button used to restart the game and display win condition 🙂/😵/🤩
 const restartButton = document.createElement('button');
-const m = document.createElement('p'); // "map" or "game map element"
+
+// Game Map element that contains the buttons
+const m = document.createElement('p');
 
 const start = () => {
   // numBombs is decremented when adding bombs, so needs to be reset on start()
@@ -21,20 +30,23 @@ const start = () => {
 
   for (let i = 0; i < w * h; i++) {
     const button = document.createElement('button');
-    button.onclick = (e) => revealCell(i % w, ~~(i / w), 1); // Saves 1B by including the e variable
+
+    // Always including 'e' parame saves 1B compared to some with some without
+    button.onclick = (e) => revealCell(i % w, ~~(i / w), 1);
     button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
-    // "value" that we give each button. Is the number of adjacent bombs (or 9+ if there's a bomb)
+
+    // Cell Value, is the number of adjacent bombs (or 9+ if there's a bomb)
     button.v = 0;
     m.append(button);
   }
 
   const addBomb = () => {
-    const randomIndex = ~~(Math.random() * w * h); // ~~ as Math.floor() for positive numbers
+    const index = ~~(Math.random() * w * h); // ~~ as Math.floor() for +numbers
 
-    if (m.children[randomIndex].v) {
+    if (m.children[index].v) {
       addBomb();
     } else {
-      m.children[randomIndex].v = 9;
+      m.children[index].v = 9;
     }
   }
 
@@ -66,13 +78,16 @@ const start = () => {
 const checkIfWon = () => {
   for (let i = 0; i < w * h; i++) {
     if (
-      (m.children[i].v > 8 && m.children[i].innerHTML !== '🚩') || // Bomb without a flag
-      (m.children[i].v < 9 && !m.children[i].disabled) // Not-a-bomb that's not yet been clicked
+      // A cell with a bomb, that hasn't been flagged yet:
+      (m.children[i].v > 8 && m.children[i].innerHTML !== '🚩') ||
+      // A cell without a bomb, that's not been clicked yet:
+      (m.children[i].v < 9 && !m.children[i].disabled)
     ) {
-      return; // Haven't won
+      return; // Haven't won!
     }
   }
 
+  // Have won!
   restartButton.innerHTML = '🤩';
 
   for (let i = 0; i < w * h; i++) {
@@ -87,7 +102,7 @@ const flagCell = (button) => {
     button.innerHTML = '';
     // Add the flag back into the flag-storage
     flagCountElement.innerHTML += '🚩';
-  // If there's not a flag on it, and there's still at least some flags in the flag-storage
+  // If there's not a flag on it, and there's still >0 flags in flag-storage
   } else if (flagCountElement.innerHTML) {
     // Add the flag to the button
     button.innerHTML = '🚩';
@@ -115,9 +130,8 @@ const revealCell = (x, y, initial) => {
 
   checkIfWon();
 
-  // If there's no number at all in this cell then clear (by "clicking") adjacent cells
+  // If there's no number in this cell then reveal adjacent cells
   if (!button.v) {
-    // there's nothing in this cell, clear it and any other empty cells around it
     revealCell(x - 1, y - 1);
     revealCell(x    , y - 1);
     revealCell(x + 1, y - 1);
@@ -149,24 +163,31 @@ const revealCell = (x, y, initial) => {
   }
 }
 
+// Remove the default body margin
 b.style.cssText = `
   margin: 0;
 `;
+
+// COntrols container element is display: flex so button can be
 controls.style.cssText = `
   margin: 1em;
   max-width: 4in;
   display: flex;
 `;
-// font: size font-family shorthand used with invalid font-family to save bytes.
-// 'd' is chosen as the invalid font because it appears frequently before `;` in CSS.
-// width is // 384/9*1.5=64 so it takes up 1 and a half square with default size.
-// width being in rem saves 2B 'cause 4rem = 64px, & it's similar to 'max-width:4in'.
+
+// `font: size font-family;` shorthand with invalid font-family saves bytes.
+// 'd' is the invalid font as it appears frequently before `;` in other CSS.
+// width is 384/9*1.5=64 so it takes up 1 and a half square with default size.
+// width in rem saves 2B 'cause 4rem = 64px, & it's similar to 'max-width:4in'.
 restartButton.style.cssText = `
   margin-left: auto;
   max-width: 4rem;
   font: 1cm d;
   aspect-ratio: 1;
 `;
+
+// Width, height, and aspect ratio are inlined here, which saves lots of bytes,
+// as the default 9x9 board is `aspect-ration: 1` (same as restartButton).
 m.style.cssText = `
   margin: 1em;
   max-width: 4in;
@@ -174,9 +195,17 @@ m.style.cssText = `
   grid: repeat(${h},1fr)/repeat(${w},1fr);
   aspect-ratio: ${w/h};
 `;
+
+// Clicking the restartButton (when it's in any state) restarts the game
 restartButton.onclick = start;
+
+// Add flags and the restart button to their container element
 controls.append(flagCountElement, restartButton);
+
+// Add the controls container and the game map/board to the document body
 b.append(controls, m);
+
+// Start the game for the first time
 start();
 
 // Color testing
