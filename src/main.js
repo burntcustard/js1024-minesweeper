@@ -24,10 +24,16 @@ const start = () => {
   // numBombs is decremented when adding bombs, so needs to be reset on start()
   let numBombs = 10;
 
+  // Fill flag storage element with starting flags
   flagCountElement.innerHTML = '🚩'.repeat(numBombs);
+
+  // Set the restart button to it's initial "you're currently playing" state
   restartButton.innerHTML = '🙂';
+
+  // Clear any existing button elements from the game map
   m.innerHTML = '';
 
+  // Create new cells (button elements)
   for (let i = 0; i < w * h; i++) {
     const button = document.createElement('button');
 
@@ -35,7 +41,7 @@ const start = () => {
     button.onclick = (e) => revealCell(i % w, ~~(i / w), 1);
     button.oncontextmenu = (e) => e.preventDefault() & flagCell(button);
 
-    // Cell Value, is the number of adjacent bombs (or 9+ if there's a bomb)
+    // Cell Value, i.e. the number of adjacent bombs (9+ if the cell is a bomb)
     button.v = 0;
     m.append(button);
   }
@@ -56,6 +62,7 @@ const start = () => {
     addBomb();
   }
 
+  // Look at each cells adjacent cells and increment if there's a bomb nearby
   for (let i = 0; i < w * h; i++) {                                                                         //  x, y
      i      % w && i >= w        && m.children[i % w + w * (~~(i / w) - 1) - 1].v > 8 && m.children[i].v++; // -1,-1
                    i >= w        && m.children[i % w + w * (~~(i / w) - 1)    ].v > 8 && m.children[i].v++; //  0,-1
@@ -68,6 +75,9 @@ const start = () => {
     (i + 1) % w && i + w < w * h && m.children[i % w + w * (~~(i / w) + 1) + 1].v > 8 && m.children[i].v++; // +1,+1
   }
 
+  // Set text color for each cell. Must be done even for bomb cells, as setting
+  // a specific color removes Chrome's disabled button text transparency (which
+  // even applies to emojis like the bomb)
   for (let i = 0; i < w * h; i++) {
     m.children[i].style.cssText = `
       color: lch(45 99 ${m.children[i].v ** 1.1 * 225});
@@ -100,13 +110,13 @@ const flagCell = (button) => {
   if (button.innerHTML) {
     // Remove the flag from the button
     button.innerHTML = '';
-    // Add the flag back into the flag-storage
+    // Add the flag back into the flag storage element
     flagCountElement.innerHTML += '🚩';
   // If there's not a flag on it, and there's still >0 flags in flag-storage
   } else if (flagCountElement.innerHTML) {
     // Add the flag to the button
     button.innerHTML = '🚩';
-    // Remove a single flag from the flag storage
+    // Remove a single flag from the flag storage element
     flagCountElement.innerHTML = flagCountElement.innerHTML.replace('🚩', '');
     // We might have just won!
     checkIfWon();
@@ -125,7 +135,10 @@ const revealCell = (x, y, initial) => {
     flagCountElement.innerHTML += '🚩';
   }
 
+  // Show the cell's value, if it's >0. Uses <b> to make the button text bold
   button.innerHTML = '<b>' + (button.v || '');
+
+  // Disable the cell to make it non-interactive & apply default disabled style
   button.disabled = true;
 
   checkIfWon();
@@ -147,12 +160,12 @@ const revealCell = (x, y, initial) => {
   if (button.v > 8 && initial) {
     // Go through every button
     for (let i = 0; i < w * h; i++) {
-      // Show the bombs
+      // Show all the bombs
       if (m.children[i].v > 8) {
         m.children[i].innerHTML = '💣';
       }
 
-      // Disable every button
+      // Disable all the buttons
       m.children[i].disabled = true;
     }
 
@@ -168,7 +181,7 @@ b.style.cssText = `
   margin: 0;
 `;
 
-// COntrols container element is display: flex so button can be
+// Controls container element is display: flex so button can be
 controls.style.cssText = `
   margin: 1em;
   max-width: 4in;
