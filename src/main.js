@@ -125,6 +125,7 @@ const flagCell = (button) => {
 
 const revealCell = (x, y, initial) => {
   const button = m.children[y * w + x];
+
   if (x < 0 || x >= w || y < 0 || y >= h || button.disabled) return;
 
   if (button.innerHTML === '🚩') {
@@ -167,12 +168,15 @@ const revealCell = (x, y, initial) => {
 
       // Disable all the buttons
       m.children[i].disabled = true;
+
+      // Set the restart button state
+      // (done inside the for loop to save 2B)
+      restartButton.innerHTML = '😵';
+
+      // Override the bomb with the explosion on the pressed button
+      // (done inside the for loop to save 2B)
+      button.innerHTML = '💥';
     }
-
-    restartButton.innerHTML = '😵';
-
-    // Override the bomb with the explosion on the pressed button
-    button.innerHTML = '💥';
   }
 }
 
