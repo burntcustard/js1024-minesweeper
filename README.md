@@ -8,22 +8,22 @@
 
 ### How to play
 
-- Left click or press on a square to reveal it's contents. If it's a 💣 you lose 😵
-- Right click or long-press on a square to place a 🚩 on it.
-- A square's neighbors are the squares above, right, below, left, and all 4 diagonals. 🔆
-- If a revealed square has a number, that number indicates how many neighboring 💣 it has.
-- If you reveal a square with no neighboring 💣, all its neighbors automatically reveal.
-- To win, all squares containing 💣 must have 🚩 on them, and all other squares must be revealed 🤩
+- Left click or press on a ⬜ to reveal it's contents. If it's a 💣 you lose 😵
+- Right click or long-press on a ⬜ to place a 🚩 on it.
+- A ⬜'s neighbors are the ⬜ directly adjacent to it, including all 4 diagonals. 🔆
+- If a revealed ⬜ has a number, that number indicates how many neighboring 💣 it has.
+- If you reveal a ⬜ with no neighboring 💣, all its neighbors automatically reveal.
+- To win, all ⬜ containing 💣 must have 🚩 on them, and all other ⬜ must be revealed 🤩
 - Click the 🙂 in the top right at any time to restart 🔁
 
 ### Differences from conventional Minesweeper
-- Squares with incorrectly placed 🚩 are ignored when automatically revealing and are instead just re-added to storage.
-- There is no 'chording', i.e. revealing surrounding squares when a numbered square with correctly placed surrounding 🚩 is clicked.
-- There is no 'start with clear' or 'start with safe', i.e. there is a chance the first square you press contains a 💣
+- ⬜ with incorrectly placed 🚩 are ignored when automatically revealing and are instead just re-added to storage.
+- There is no 'chording', i.e. revealing surrounding ⬜ when a numbered ⬜ with correctly placed surrounding 🚩 is clicked.
+- There is no 'start with clear' or 'start with safe', i.e. there is a chance the first ⬜ you press contains a 💣
 
 ### Known issues
 - The game is not accessible, because emoji represent elements that should have text labels, and because the grid is just 81 buttons.
-- Numbered cells text-colors do not have great contrast on button backgrounds, and 1 and 4 are quite similar. This is because of the hacky way the colours are picked with `lch(45 99 ${number ** 1.1 * 225})`.
+- Numbered ⬜ text-colors do not have great contrast on button backgrounds, and 1 and 4 are quite similar. This is because of the hacky way the colours are picked with `lch(45 99 ${number ** 1.1 * 225})`.
 - Emoji are not always perfectly centered, because of font and default button styling differences between browsers and operating systems.
 
 ---
@@ -42,7 +42,7 @@
 ### Easy modifications
 
 If running locally, by editing [main.js](src/main.js), you can:
-- Change the number of squares in the game board with the `w` and `h` variables:
+- Change the number of ⬜ in the game board with the `w` and `h` variables:
   ```js
   const w = 30;  // default: 9
   const h = 16;  // default: 9
