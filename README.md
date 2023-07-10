@@ -29,7 +29,7 @@
 3. Run watch command to start up hot-reloading browser-sync  
   `npm run watch`
 
-### Making things more difficult
+### Easy modifications
 
 If running locally, by editing [main.js](src/main.js), you can:
 - Change the number of squares in the game board with the `w` and `h` variables:
