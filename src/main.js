@@ -79,7 +79,9 @@ const start = () => {
   // a specific color removes Chrome's disabled button text transparency (which
   // even applies to emojis like the bomb)
   for (let i = 0; i < w * h; i++) {
+    // Dodgy margin saves 1B 'cause all our cssText strings start with `margin`
     m.children[i].style.cssText = `
+      margin:;
       color: lch(45 99 ${m.children[i].v ** 1.1 * 225});
     `;
   }
@@ -149,16 +151,18 @@ const revealCell = (x, y, initial) => {
     // here. Overriding saves bytes compared to setting button text just once.
     button.innerHTML = '';
 
-    // Reveal adjacent cells
-    revealCell(x - 1, y - 1);
-    revealCell(x    , y - 1);
-    revealCell(x + 1, y - 1);
-    revealCell(x - 1, y    );
- // revealCell(x    , y    );
-    revealCell(x + 1, y    );
-    revealCell(x - 1, y + 1);
-    revealCell(x    , y + 1);
-    revealCell(x + 1, y + 1);
+    setTimeout(e => { // `e` is unused but it's saves byes vs `()`
+      // Reveal adjacent cells
+      revealCell(x - 1, y - 1);
+      revealCell(x    , y - 1);
+      revealCell(x + 1, y - 1);
+      revealCell(x - 1, y    );
+   // revealCell(x    , y    );
+      revealCell(x + 1, y    );
+      revealCell(x - 1, y + 1);
+      revealCell(x    , y + 1);
+      revealCell(x + 1, y + 1);
+    }, 99);
   }
 
   // If it's a bomb that was just clicked
