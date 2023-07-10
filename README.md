@@ -66,7 +66,7 @@ If running locally, by editing [main.js](src/main.js), you can:
   ```js
   let numBombs = 99;  // default 10
   ```
-- Remove the requirement to 🚩 all 💣, like in traditional Minesweeper, by removing the following line inside `checkIfWon`:
+- Remove the requirement to 🚩 all 💣, like in traditional Minesweeper, by removing the following line:
   ```js
   (m.children[i].v > 8 && m.children[i].innerHTML !== '🚩') ||
   ```
