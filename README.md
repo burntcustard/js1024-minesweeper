@@ -18,7 +18,7 @@
 
 ### Differences from conventional Minesweeper
 - ⬜ with incorrectly placed 🚩 are ignored when automatically revealing and are instead just re-added to storage.
-- There is no 'chording', i.e. revealing surrounding ⬜ when a numbered ⬜ with correctly placed surrounding 🚩 is clicked.
+- There is no 'chording', i.e. revealing empty ⬜ when a numbered ⬜ with correctly placed surrounding 🚩 is clicked.
 - There is no 'start with clear' or 'start with safe', i.e. there is a chance the first ⬜ you press contains a 💣
 
 ### Known issues
