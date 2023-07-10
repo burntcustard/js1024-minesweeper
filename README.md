@@ -22,7 +22,7 @@
 - There is no 'start with clear' or 'start with safe', i.e. there is a chance the first ⬜ you press contains a 💣
 
 ### Known issues
-- The game is not accessible, because emoji represent elements that should have text labels, and because the grid is just 81 buttons.
+- The game is not screen-reader accessible, because emoji represent elements that should have text labels, and because the grid is just 81 consecutive initially empty buttons.
 - Numbered ⬜ text-colors do not have great contrast on button backgrounds, and 1 and 4 are quite similar. This is because of the hacky way the colours are picked with `lch(45 99 ${number ** 1.1 * 225})`.
 - Emoji are not always perfectly centered, because of font and default button styling differences between browsers and operating systems.
 
