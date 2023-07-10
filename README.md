@@ -12,9 +12,19 @@
 - Right click or long-press on a square to place a 🚩 on it.
 - A square's neighbors are the squares above, right, below, left, and all 4 diagonals. 🔆
 - If a revealed square has a number, that number indicates how many neighboring 💣 it has.
-- If you reveal a square with no neighboring 💣, all its neighbors automatically open.
+- If you reveal a square with no neighboring 💣, all its neighbors automatically reveal.
 - To win, all squares containing 💣 must have 🚩 on them, and all other squares must be revealed 🤩
 - Click the 🙂 in the top right at any time to restart 🔁
+
+### Differences from conventional Minesweeper
+- Squares with incorrectly placed 🚩 are ignored when automatically revealing and are instead just re-added to storage.
+- There is no 'chording', i.e. revealing surrounding squares when a numbered square with correctly placed surrounding 🚩 is clicked.
+- There is no 'start with clear' or 'start with safe', i.e. there is a chance the first square you press contains a 💣
+
+### Known issues
+- The game is not accessible, because emoji represent elements that should have text labels, and because the grid is just 81 buttons.
+- Numbered cells text-colors do not have great contrast on button backgrounds, and 1 and 4 are quite similar. This is because of the hacky way the colours are picked with `lch(45 99 ${number ** 1.1 * 225})`.
+- Emoji are not always perfectly centered, because of font and default button styling differences between browsers and operating systems.
 
 ---
 
