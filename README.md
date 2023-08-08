@@ -4,7 +4,7 @@
 
 ### [Play online](https://burnt.io/js1024-minesweeper)
 
-> [js1024](https://js1024.fun/) entry - the total size of [index.html](index.html) is less than 1024B!
+> 🥇 Winner of [js1024 2023](https://js1024.fun/results/2023) - the total size of [index.html](index.html) is exactly 1024B!
 
 ### How to play
 
